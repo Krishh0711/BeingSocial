@@ -1,7 +1,11 @@
+<link rel="stylesheet" href="/css/header.css">
 <header>
-    Page Header 
-
-    <ul>
+   <div id="header-container">
+     <div id="logo-container">
+        <h4>BeingSocial</h4>
+     </div>
+     <div id="link-container">
+      <ul>
         <% if(locals.user){ %>
           <li><a href="/users/profile"><%=user.name%></a></li>
           <li>
@@ -17,4 +21,8 @@
             <% } %>
 
     </ul>
+     </div>
+       
+   </div>
+    
 </header>

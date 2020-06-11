@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0; }
+  body #footer-container {
+    width: 100%;
+    color: white;
+    padding: 0  30px;
+    box-sizing: border-box;
+    background-image: linear-gradient(45deg, black, grey, black); }
+    body #footer-container #visitLink-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+      body #footer-container #visitLink-container #copyright-design {
+        text-align: center; }
