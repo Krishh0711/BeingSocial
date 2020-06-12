@@ -11,7 +11,15 @@ module.exports.home = function(request,response){
     //     });
     // });
 
-    Post.find({}).populate('user').exec(function(err,posts){
+    Post.find({})
+    .populate('user')
+    .populate({
+        path:'comments',
+        populate:{
+            path:'user'
+        }
+    })
+    .exec(function(err,posts){
         return response.render('home',{
             title: "Home",
             posts: posts
