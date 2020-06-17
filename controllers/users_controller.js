@@ -1,22 +1,35 @@
 const User =  require('../models/user');
 
-module.exports.profile = function(request,response){
-   User.findById(request.params.id,function(err,user){
+module.exports.profile = async function(request,response){
+    
+   try {
+      let user = await User.findById(request.params.id);
       return response.render('user_profile',{
          title: "BeingSocial/Profile",
          profile_user:user
       });
-   });
+   } catch (error) {
+      console.log('Error --->' , error);
+      return;
+   }
+
+  
 }
 
-module.exports.update = function(request,response){
-  if(request.user.id == request.params.id){
-     User.findByIdAndUpdate(request.params.id, request.body,function(err,user){
-        return response.redirect('back');
-     });
-  }else{
-     return response.status(401,send('Unauthorised'));
+module.exports.update = async function(request,response){
+ 
+  try {
+    if(request.user.id == request.params.id){
+      let user = await User.findByIdAndUpdate(request.params.id, request.body);
+      return response.redirect('back');
+    }else{
+      return response.status(401,send('Unauthorised'));
+    }
+  } catch (error) {
+    console.log('Error --->' , error);
+    return;
   }
+  
 }
 
 //render the sign up page
@@ -40,24 +53,26 @@ module.exports.signIn = function(request,response){
 }
 
 //get the sign up data
-module.exports.create = function(request,response){
-  if(request.body.password !=  request.body.confirm_password){
-     return response.redirect('back');
-  }
+module.exports.create = async function(request,response){
 
-  User.findOne({email: request.body.email},function(err,user){
-     if(err){console.log('error in finding user in signing up'); return}
-
-     if(!user){
-        User.create(request.body, function(err,user){
-         if(err){console.log('error in creating user in signing up'); return} 
-
-         return response.redirect('/users/sign-in');
-        });
-     }else{
+  try {
+   if(request.body.password !=  request.body.confirm_password){
       return response.redirect('back');
-     }
-  })
+   }
+ 
+   let user = await User.findOne({email: request.body.email});
+   
+   if(!user){
+    let userInsert = await User.create(request.body);
+    return response.redirect('/users/sign-in');
+    }else{
+    return response.redirect('back');
+    }
+     
+  } catch (error) {
+    console.log('Error --->' , error);
+    return;
+  }
 }
 
 //sign in and create session for user   
