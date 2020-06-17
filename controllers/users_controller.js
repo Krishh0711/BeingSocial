@@ -54,7 +54,6 @@ module.exports.signIn = function(request,response){
 
 //get the sign up data
 module.exports.create = async function(request,response){
-
   try {
    if(request.body.password !=  request.body.confirm_password){
       return response.redirect('back');
