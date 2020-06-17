@@ -76,10 +76,12 @@ module.exports.create = async function(request,response){
 
 //sign in and create session for user   
 module.exports.createSession = function(request,response){
+   request.flash('success', 'Logged in Successfully');
    return response.redirect('/');
 }
 
 module.exports.destroySession = function(request,response){
    request.logout();
+   request.flash('success', 'Logged out Successfully');
    return response.redirect('/');
 }

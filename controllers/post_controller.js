@@ -4,14 +4,15 @@ const Comment = require('../models/comment');
 
 module.exports.create = async function(request,response){
    try{
-      let post = await Post.create({
+        await Post.create({
         content: request.body.content,
         user: request.user._id
        });
+       request.flash('success','Post published!!');
        return response.redirect('back');
    }catch(err){
-       console.log('Error ---> ' , err);
-       return;
+    request.flash('error',err);
+       return response.redirect('back');
    }
   
 }
@@ -25,14 +26,17 @@ module.exports.destroy = async function(request,response){
     if(post.user == request.user.id){
         post.remove();
 
-    let comment = await Comment.deleteMany({post:request.params.id});
+    await Comment.deleteMany({post:request.params.id});
+
+    request.flash('success','Post and associated comments deleted');
     return response.redirect('back');
     }else{
+        request.flash('error','You cannot delete this post');
         return response.redirect('back');
     }
    }catch(err){
-    console.log('Error ---> ' , err);
-    return;
+    request.flash('error',err);
+    return response.redirect('back');
    }
 
     
