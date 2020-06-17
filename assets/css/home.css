@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: grey; }
+  background-color: white; }
   body #home-container {
     display: flex;
     flex-direction: row;
