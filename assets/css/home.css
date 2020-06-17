@@ -1,2 +1,20 @@
 body {
-  color: indigo; }
+  margin: 0;
+  padding: 0;
+  background-color: grey; }
+  body #home-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%; }
+    body #home-container #other-links {
+      width: 20%;
+      border-right: 1px solid black;
+      padding: 10px; }
+    body #home-container #feed-post {
+      width: 60%;
+      padding: 10px; }
+    body #home-container #user-friends {
+      width: 20%;
+      padding: 10px;
+      border-left: 1px solid black; }
