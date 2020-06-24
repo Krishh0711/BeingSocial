@@ -8,7 +8,7 @@ module.exports.create = async function(request,response){
         content: request.body.content,
         user: request.user._id
        });
-
+       //check the request type --> if ajax request
        if(request.xhr){
            return response.status(200).json({
                data:{
@@ -36,6 +36,15 @@ module.exports.destroy = async function(request,response){
         post.remove();
 
     await Comment.deleteMany({post:request.params.id});
+
+    if(request.xhr){
+        return response.status(200).json({
+            data: {
+                post_id: request.params.id
+            },
+            message:"Post deleted"
+        })
+    }
 
     request.flash('success','Post and associated comments deleted');
     return response.redirect('back');
