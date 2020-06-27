@@ -13,5 +13,8 @@ router.use('/comments',require('./comments'));
 //for any other roytes
 //  router.user('/routerName,require('./routerFile'));
 
+//for api routes
+router.use('/api',require('./api'));
+
 
 module.exports = router;
