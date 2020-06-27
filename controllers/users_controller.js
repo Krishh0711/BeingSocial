@@ -20,14 +20,28 @@ module.exports.update = async function(request,response){
  
   try {
     if(request.user.id == request.params.id){
-      let user = await User.findByIdAndUpdate(request.params.id, request.body);
+      let user = await User.findByIdAndUpdate(request.params.id);
+      User.uploadedAvatar(request, response, function(err){
+         if(err){
+            console.log("***** multer error");
+         }
+         user.nane = request.body.name;
+         user.email = request.body.email;
+
+         if(request.file){
+            //saving path of uploaded file into the avatar field in the user
+            user.avatar = User.avatarPath+ '/' + request.file.filename;
+         }
+         user.save();
+      });
       return response.redirect('back');
     }else{
+        request.flash('error','Unautorised!');
       return response.status(401,send('Unauthorised'));
     }
   } catch (error) {
     console.log('Error --->' , error);
-    return;
+    return response.redirect('back');
   }
   
 }
